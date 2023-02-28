@@ -1,3 +1,5 @@
+import PaymentInformationForm from '../../../components/PaymentInformationForm';
+
 export default function Payment() {
-  return 'Pagamento: Em breve!';
+  return <PaymentInformationForm />;
 }
