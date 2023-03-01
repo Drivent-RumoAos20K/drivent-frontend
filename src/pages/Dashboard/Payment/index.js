@@ -1,3 +1,7 @@
+import CreditCardForm from './CreditCardForm';
+
 export default function Payment() {
-  return 'Pagamento: Em breve!';
+  return (
+    <CreditCardForm/>
+  );
 }
