@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import useEnrollment from '../../hooks/api/useEnrollment';
+import useToken from '../../hooks/useToken';
 import {
   ContainerAccommodation,
   ContainerChoices,
@@ -17,6 +19,10 @@ export default function PaymentInformationForm() {
   const [onlineOption, setOnlineOption] = useState(false);
   const [haveHotel, setHaveHotel] = useState(false);
   const [notHaveHotel, setNotHaveHotel] = useState(false);
+  const [ticketId, setTicketId] = useState(null);
+
+  const { enrollment } = useEnrollment();
+  const token = useToken();
 
   function handleModality(online, price) {
     setSelected({ online, price, hotelPrice: null });
@@ -45,12 +51,6 @@ export default function PaymentInformationForm() {
     }
   }
 
-  function saveTicketInfos() {
-    if (presentialOption !== onlineOption && haveHotel !== notHaveHotel) {
-      console.log({ onlineOption, haveHotel });
-    }
-  }
-
   return (
     <ContainerMain>
       <div>
@@ -76,7 +76,20 @@ export default function PaymentInformationForm() {
           <></>
         )}
       </div>
-      {haveHotel || notHaveHotel ? <FinishOrderSummary selected={selected} saveTicketInfos={saveTicketInfos} /> : <></>}
+      {haveHotel || notHaveHotel ? (
+        <FinishOrderSummary
+          selected={selected}
+          presentialOption={presentialOption}
+          onlineOption={onlineOption}
+          notHaveHotel={notHaveHotel}
+          haveHotel={haveHotel}
+          token={token}
+          setTicketId={setTicketId}
+          enrollment={enrollment}
+        />
+      ) : (
+        <></>
+      )}
     </ContainerMain>
   );
 }
