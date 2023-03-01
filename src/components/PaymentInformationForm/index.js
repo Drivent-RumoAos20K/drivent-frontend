@@ -55,20 +55,21 @@ export default function PaymentInformationForm() {
     <ContainerMain>
       <div>
         <h1>Ingresso e pagamento</h1>
-        <ContainerChoices>
-          <ContainerOption onClick={() => handleModality(false, 250)}>Choice - 1</ContainerOption>
-          <ContainerOption onClick={() => handleModality(true, 100)}>Choice - 2</ContainerOption>
+        <ContainerChoices >
+          <ContainerOption selected={presentialOption} onClick={() => handleModality(false, 250)}><h1>Presencial</h1><h2>R$ 250</h2></ContainerOption>
+          <ContainerOption selected={onlineOption} onClick={() => handleModality(true, 100)}><h1>Online</h1><h2>R$ 100</h2></ContainerOption>
         </ContainerChoices>
       </div>
       <div>
         {presentialOption ? (
           <ContainerAccommodation>
+            <h2>Ótimo! Agora escolha sua modalidade de hospedagem</h2>
             <ContainerChoices>
-              <ContainerOption notHaveHotel={notHaveHotel} onClick={() => handleHospitality(false, 0)}>
-                ChoiceNotHotel - 1
+              <ContainerOption selected={notHaveHotel} notHaveHotel={notHaveHotel} onClick={() => handleHospitality(false, 0)}>
+                <h1>Sem Hotel</h1><h2>+ R$ 0</h2>
               </ContainerOption>
-              <ContainerOption haveHotel={haveHotel} onClick={() => handleHospitality(true, 350)}>
-                ChoiceHotel - 2
+              <ContainerOption selected={haveHotel} haveHotel={haveHotel} onClick={() => handleHospitality(true, 350)}>
+                <h1>Com Hotel</h1><h2>+ R$ 350</h2>
               </ContainerOption>
             </ContainerChoices>
           </ContainerAccommodation>
