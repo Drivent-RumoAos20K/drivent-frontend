@@ -8,7 +8,7 @@ import { processPayment } from '../../services/paymentApi';
 import dayjs from 'dayjs';
 import UserContext from '../../contexts/UserContext';
 
-export default function CreditCardForm({ cardVisibility, ticketId }) {
+export default function CreditCardForm({ cardVisibility, ticketId, setPaymentConfirmed }) {
   const [form, setForm] = useState({
     number: '',
     expiry: '',
@@ -78,6 +78,7 @@ export default function CreditCardForm({ cardVisibility, ticketId }) {
       };
       await processPayment(body, userData.token);
       toast('Pagamento efetuado com sucesso.');
+      setPaymentConfirmed(true);
     } catch (err) {
       alert('Algo deu errado, por favor tente mais tarde.');
     }
@@ -160,7 +161,6 @@ const ContainerCreditCardForm = styled.div`
 const FormContainer = styled.div`
   display: flex;
   margin-top: 30px;
-
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
   -webkit-appearance: none;
