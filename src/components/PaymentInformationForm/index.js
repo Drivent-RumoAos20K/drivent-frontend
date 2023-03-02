@@ -9,17 +9,23 @@ import {
 } from '../PaymentInformationForm/PaymentWrapper';
 import FinishOrderSummary from './FinishOrderSummary';
 
-export default function PaymentInformationForm() {
+export default function PaymentInformationForm({ 
+  setfirstSreenVisibility, 
+  setTicketId,
+  presentialOption,
+  setPresentialOption,
+  onlineOption, 
+  setOnlineOption,
+  haveHotel,
+  setHaveHotel,
+  notHaveHotel,
+  setNotHaveHotel
+}) {
   const [selected, setSelected] = useState({
     online: null,
     price: null,
     hotelPrice: null,
   });
-  const [presentialOption, setPresentialOption] = useState(false);
-  const [onlineOption, setOnlineOption] = useState(false);
-  const [haveHotel, setHaveHotel] = useState(false);
-  const [notHaveHotel, setNotHaveHotel] = useState(false);
-  const [ticketId, setTicketId] = useState(null);
 
   const { enrollment } = useEnrollment();
   const token = useToken();
@@ -87,6 +93,7 @@ export default function PaymentInformationForm() {
           token={token}
           setTicketId={setTicketId}
           enrollment={enrollment}
+          setfirstSreenVisibility={setfirstSreenVisibility}
         />
       ) : (
         <></>

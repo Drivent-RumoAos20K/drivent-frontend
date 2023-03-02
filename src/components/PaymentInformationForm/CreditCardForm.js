@@ -8,7 +8,7 @@ import { processPayment } from '../../services/paymentApi';
 import dayjs from 'dayjs';
 import UserContext from '../../contexts/UserContext';
 
-export default function CreditCardForm() {
+export default function CreditCardForm({ cardVisibility, ticketId }) {
   const [form, setForm] = useState({
     number: '',
     expiry: '',
@@ -54,10 +54,6 @@ export default function CreditCardForm() {
   function isValidMonth(month) {
     return Number(month) <= 12;
   }
-
-  function isValidYear(year) {
-    return Number(year) > Number(dayjs().format('YY'));
-  }
   
   async function handleSubmit() {
     if(!form.cvc || !form.expiry || !form.name || !form.number) {
@@ -66,14 +62,13 @@ export default function CreditCardForm() {
     
     const expirationDate = '20' + form.expiry[3] + form.expiry[4] + '-' + form.expiry[0] + form.expiry[1];
     const month = expirationDate[5] + expirationDate[6];
-    const year = expirationDate[2] + expirationDate[3]; 
-    if(!isValidMonth(month) || !isValidYear(year)) {
+    if(!isValidMonth(month)) {
       return alert('Insira uma data de expiração válida');
     }
 
     try {
       const body = {
-        ticketId: 1,
+        ticketId,
         cardData: {
           issuer: cardType.issuer,
           number: form.number,
@@ -89,8 +84,8 @@ export default function CreditCardForm() {
   }
   
   return (
-    <ContainerCreditCardForm>
-      <h1>Pagamento</h1>
+    <ContainerCreditCardForm display={cardVisibility ? 'flex' : 'none'}>
+      <h2>Pagamento</h2>
       <FormContainer>
         <CardDiv>
           <Card

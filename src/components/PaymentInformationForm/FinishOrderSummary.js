@@ -12,6 +12,7 @@ export default function FinishOrderSummary({
   token,
   setTicketId,
   enrollment,
+  setfirstSreenVisibility
 }) {
   async function saveTicketsInfo(
     presentialOption,
@@ -32,6 +33,7 @@ export default function FinishOrderSummary({
     try {
       setTicketId(ticketTypeId);
       createTicket(body, token);
+      setfirstSreenVisibility(false);
     } catch (error) {
       toast('Não foi possível fazer a reserva!');
     }

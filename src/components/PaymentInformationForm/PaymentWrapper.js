@@ -25,8 +25,8 @@ export const ContainerOption = styled.div`
   justify-content:center;
   align-items:center;
   cursor: pointer;
-  width: 145px;
-  height: 145px;
+  width: ${({ width }) => width || '145px' };
+  height: ${({ height }) => height || '145px'};
   border: 1px solid #CECECE;
   border-radius: 20px;
   margin-right:24px;
