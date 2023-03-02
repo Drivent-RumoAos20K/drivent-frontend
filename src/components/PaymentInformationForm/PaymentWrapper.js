@@ -22,7 +22,41 @@ export const ContainerChoices = styled.div`
 export const ContainerOption = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content:center;
+  align-items:center;
   cursor: pointer;
+  width: ${({ width }) => width || '145px' };
+  height: ${({ height }) => height || '145px'};
+  border: 1px solid #CECECE;
+  border-radius: 20px;
+  margin-right:24px;
+  margin-bottom:44px;
+  background: ${props => props.selected ?'#FFEED2': '#fff'};
+ 
+  
+  h1{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #454545;
+    padding-bottom:0;
+    margin-top:25px;
+
+  }
+  h2{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+
+    color: #898989;
+
+  }
 `;
 
 export const ContainerAccommodation = styled.div`
