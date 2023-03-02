@@ -1,8 +1,12 @@
 import Card from 'react-credit-cards-2';
 import 'react-credit-cards-2/es/styles-compiled.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
-import Button from '../../../components/Form/Button';
+import Button from '../Form/Button';
+import { toast } from 'react-toastify';
+import { processPayment } from '../../services/paymentApi';
+import dayjs from 'dayjs';
+import UserContext from '../../contexts/UserContext';
 
 export default function CreditCardForm() {
   const [form, setForm] = useState({
@@ -12,10 +16,12 @@ export default function CreditCardForm() {
     name: '',
     focus: '',
   });
+  const [cardType, setCardType] = useState(undefined);
+  const { userData } = useContext(UserContext);
 
   function handleInputChange(e) {
     const { name, value } = e.target;
-    if (name === 'number' && value.length > 16) {
+    if (name === 'number' && value.length > 19) {
       return;
     }
     
@@ -44,9 +50,42 @@ export default function CreditCardForm() {
   function handleInputFocus(e) {
     setForm((form) => ( { ...form, focus: e.target.name } ) );
   }
+
+  function isValidMonth(month) {
+    return Number(month) <= 12;
+  }
+
+  function isValidYear(year) {
+    return Number(year) > Number(dayjs().format('YY'));
+  }
   
-  function handleSubmit() {
-    alert('oi');
+  async function handleSubmit() {
+    if(!form.cvc || !form.expiry || !form.name || !form.number) {
+      return alert('Todos os dados são necessários');
+    }
+    
+    const expirationDate = '20' + form.expiry[3] + form.expiry[4] + '-' + form.expiry[0] + form.expiry[1];
+    const month = expirationDate[5] + expirationDate[6];
+    const year = expirationDate[2] + expirationDate[3]; 
+    if(!isValidMonth(month) || !isValidYear(year)) {
+      return alert('Insira uma data de expiração válida');
+    }
+
+    try {
+      const body = {
+        ticketId: 1,
+        cardData: {
+          issuer: cardType.issuer,
+          number: form.number,
+          expirationDate: dayjs(expirationDate).format('YYYY-MM-DD'),
+          cvv: form.cvc,
+        }
+      };
+      await processPayment(body, userData.token);
+      toast('Pagamento efetuado com sucesso.');
+    } catch (err) {
+      alert('Algo deu errado, por favor tente mais tarde.');
+    }
   }
   
   return (
@@ -60,6 +99,7 @@ export default function CreditCardForm() {
             expiry={form.expiry}
             cvc={form.cvc}
             focused={form.focus}
+            callback={(type) => setCardType(type)}
           />
         </CardDiv>
         <CardForm onSubmit={() => handleSubmit()}>
