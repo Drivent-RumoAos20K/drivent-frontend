@@ -1,12 +1,12 @@
 import { useContext, useState } from 'react';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import AuthLayout from '../../layouts/Auth';
 
-import Input from '../../components/Form/Input';
+import { Label, Row, Title } from '../../components/Auth';
 import Button from '../../components/Form/Button';
-import { Row, Title, Label } from '../../components/Auth';
+import Input from '../../components/Form/Input';
 import Link from '../../components/Link';
 
 import EventInfoContext from '../../contexts/EventInfoContext';
@@ -28,14 +28,14 @@ export default function Enroll() {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      toast('As senhas devem ser iguais!');
+      toast.warning('As senhas devem ser iguais!');
     } else {
       try {
         await signUp(email, password);
         toast('Inscrito com sucesso! Por favor, faça login.');
         navigate('/sign-in');
       } catch (error) {
-        toast('Não foi possível fazer o cadastro!');
+        toast.error('Não foi possível fazer o cadastro!');
       }
     }
   }
