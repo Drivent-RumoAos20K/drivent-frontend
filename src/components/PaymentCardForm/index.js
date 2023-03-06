@@ -5,7 +5,7 @@ import {
   ContainerOption
 } from '../PaymentInformationForm/PaymentWrapper';
 
-export default function PaymentCardForm({ ticketId, presentialOption, haveHotel }) {
+export default function PaymentCardForm({ ticketId, presentialOption, haveHotel, setPaymentConfirmed }) {
   function getTicketModality() {
     if(!presentialOption) {
       return (
@@ -46,6 +46,7 @@ export default function PaymentCardForm({ ticketId, presentialOption, haveHotel 
         </ContainerChoices>
       </div>
       <CreditCardForm
+        setPaymentConfirmed={setPaymentConfirmed}
         ticketId={ticketId}
       />
     </ContainerMain>
