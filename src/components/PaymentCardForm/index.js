@@ -34,7 +34,6 @@ export default function PaymentCardForm({ ticketId, presentialOption, haveHotel,
   return (
     <ContainerMain>
       <div>
-        <h1>Ingresso e pagamento</h1>
         <ContainerChoices >
           <ContainerOption 
             width = '250px'

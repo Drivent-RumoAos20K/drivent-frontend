@@ -60,7 +60,6 @@ export default function PaymentInformationForm({
   return (
     <ContainerMain>
       <div>
-        <h1>Ingresso e pagamento</h1>
         <ContainerChoices >
           <ContainerOption selected={presentialOption} onClick={() => handleModality(false, 250)}><h1>Presencial</h1><h2>R$ 250</h2></ContainerOption>
           <ContainerOption selected={onlineOption} onClick={() => handleModality(true, 100)}><h1>Online</h1><h2>R$ 100</h2></ContainerOption>
