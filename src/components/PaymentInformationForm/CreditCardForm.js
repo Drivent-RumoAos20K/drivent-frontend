@@ -1,12 +1,12 @@
+import dayjs from 'dayjs';
+import { useContext, useState } from 'react';
 import Card from 'react-credit-cards-2';
 import 'react-credit-cards-2/es/styles-compiled.css';
-import { useContext, useState } from 'react';
-import styled from 'styled-components';
-import Button from '../Form/Button';
 import { toast } from 'react-toastify';
-import { processPayment } from '../../services/paymentApi';
-import dayjs from 'dayjs';
+import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
+import { processPayment } from '../../services/paymentApi';
+import Button from '../Form/Button';
 
 export default function CreditCardForm({ cardVisibility, ticketId, setPaymentConfirmed }) {
   const [form, setForm] = useState({
@@ -24,15 +24,15 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
     if (name === 'number' && value.length > 19) {
       return;
     }
-    
+
     if (name === 'expiry' && isNaN(Number(value))) {
-      if(!value.includes('/')) {
+      if (!value.includes('/')) {
         return;
       }
     }
 
     if (name === 'expiry' && value.length === 4 && value[2] !== '/') {
-      setForm({ ...form, expiry: (`${value[0]}${value[1]}/${value[2]}${value[3]}`) });
+      setForm({ ...form, expiry: `${value[0]}${value[1]}/${value[2]}${value[3]}` });
       return;
     }
 
@@ -43,27 +43,27 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
     if (name === 'cvc' && value.length > 3) {
       return;
     }
-    
-    setForm((form) => ( { ...form, [name]: value } ));
+
+    setForm((form) => ({ ...form, [name]: value }));
   }
 
   function handleInputFocus(e) {
-    setForm((form) => ( { ...form, focus: e.target.name } ) );
+    setForm((form) => ({ ...form, focus: e.target.name }));
   }
 
   function isValidMonth(month) {
     return Number(month) <= 12;
   }
-  
+
   async function handleSubmit() {
-    if(!form.cvc || !form.expiry || !form.name || !form.number) {
-      return alert('Todos os dados são necessários');
+    if (!form.cvc || !form.expiry || !form.name || !form.number) {
+      return toast.warning('Todos os dados são necessários');
     }
-    
+
     const expirationDate = '20' + form.expiry[3] + form.expiry[4] + '-' + form.expiry[0] + form.expiry[1];
     const month = expirationDate[5] + expirationDate[6];
-    if(!isValidMonth(month)) {
-      return alert('Insira uma data de expiração válida');
+    if (!isValidMonth(month)) {
+      return toast.warning('Insira uma data de expiração válida');
     }
 
     try {
@@ -74,16 +74,16 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
           number: form.number,
           expirationDate: dayjs(expirationDate).format('YYYY-MM-DD'),
           cvv: form.cvc,
-        }
+        },
       };
       await processPayment(body, userData.token);
       toast('Pagamento efetuado com sucesso.');
       setPaymentConfirmed(true);
     } catch (err) {
-      alert('Algo deu errado, por favor tente mais tarde.');
+      toast.error('Algo deu errado, por favor tente mais tarde.');
     }
   }
-  
+
   return (
     <ContainerCreditCardForm display={cardVisibility ? 'flex' : 'none'}>
       <h2>Pagamento</h2>
@@ -106,7 +106,7 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
             type="number"
             value={form.number}
             onChange={handleInputChange}
-            onFocus= {handleInputFocus}
+            onFocus={handleInputFocus}
             placeholder="Card Number"
           />
           <LabelNumber for="number">E.g.: 49...,51...,36...,37...</LabelNumber>
@@ -116,18 +116,18 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
             type="name"
             value={form.name}
             onChange={handleInputChange}
-            onFocus= {handleInputFocus}
+            onFocus={handleInputFocus}
             placeholder="Name"
           />
           <WrapInput>
             <InputCreditCard
-              width='200px'
+              width="200px"
               label="expiry"
               name="expiry"
               type="text"
               value={form.expiry}
               onChange={handleInputChange}
-              onFocus= {handleInputFocus}
+              onFocus={handleInputFocus}
               placeholder="Valid Thru"
             />
             <InputCreditCard
@@ -137,20 +137,18 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
               type="number"
               value={form.cvc}
               onChange={handleInputChange}
-              onFocus= {handleInputFocus}
+              onFocus={handleInputFocus}
               placeholder="CVC"
             />
           </WrapInput>
         </CardForm>
       </FormContainer>
       <ButtonDiv>
-        <Button onClick={handleSubmit}>
-          FINALIZAR PAGAMENTO
-        </Button>
+        <Button onClick={handleSubmit}>FINALIZAR PAGAMENTO</Button>
       </ButtonDiv>
     </ContainerCreditCardForm>
   );
-};
+}
 
 const ContainerCreditCardForm = styled.div`
   display: flex;
@@ -163,12 +161,12 @@ const FormContainer = styled.div`
   margin-top: 30px;
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-  input[type=number] {
-  -moz-appearance: textfield;
-}
-}
+    -webkit-appearance: none;
+    margin: 0;
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
 `;
 
 const CardDiv = styled.div`
@@ -182,17 +180,17 @@ const CardForm = styled.form`
   justify-content: space-between;
 `;
 
-const InputCreditCard = styled.input `
+const InputCreditCard = styled.input`
   display: flex;
   border: 2px solid gray;
   border-radius: 5px;
   height: 46px;
-  width: ${({ width }) => width || '300px' };
+  width: ${({ width }) => width || '300px'};
   font-size: 18px;
   padding-left: 10px;
 `;
 
-const LabelNumber = styled.label `
+const LabelNumber = styled.label`
   color: #929292;
 `;
 

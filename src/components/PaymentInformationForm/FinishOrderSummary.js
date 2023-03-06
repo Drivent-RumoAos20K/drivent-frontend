@@ -35,7 +35,7 @@ export default function FinishOrderSummary({
       createTicket(body, token);
       setfirstSreenVisibility(false);
     } catch (error) {
-      toast('Não foi possível fazer a reserva!');
+      toast.error('Não foi possível fazer a reserva!');
     }
   }
 

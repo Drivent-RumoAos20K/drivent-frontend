@@ -1,13 +1,13 @@
-import { useState, useContext } from 'react';
-import { toast } from 'react-toastify';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import AuthLayout from '../../layouts/Auth';
 
-import Input from '../../components/Form/Input';
+import { Label, Row, Title } from '../../components/Auth';
 import Button from '../../components/Form/Button';
+import Input from '../../components/Form/Input';
 import Link from '../../components/Link';
-import { Row, Title, Label } from '../../components/Auth';
 
 import EventInfoContext from '../../contexts/EventInfoContext';
 import UserContext from '../../contexts/UserContext';
@@ -34,7 +34,7 @@ export default function SignIn() {
       toast('Login realizado com sucesso!');
       navigate('/dashboard');
     } catch (err) {
-      toast('Não foi possível fazer o login!');
+      toast.error('Não foi possível fazer o login!');
     }
   } 
 
