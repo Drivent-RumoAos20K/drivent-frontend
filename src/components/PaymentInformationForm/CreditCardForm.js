@@ -99,7 +99,6 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
       toast('Pagamento efetuado com sucesso.');
       setPaymentConfirmed(true);
     } catch (err) {
-      console.log(err);
       toast.error('Algo deu errado, por favor tente mais tarde.');
     }
   }

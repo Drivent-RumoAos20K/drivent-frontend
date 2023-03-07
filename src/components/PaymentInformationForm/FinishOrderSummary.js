@@ -14,15 +14,7 @@ export default function FinishOrderSummary({
   enrollment,
   setfirstSreenVisibility
 }) {
-  async function saveTicketsInfo(
-    presentialOption,
-    onlineOption,
-    notHaveHotel,
-    haveHotel,
-    token,
-    setTicketId,
-    enrollment
-  ) {
+  async function saveTicketsInfo() {
     const userId = enrollment.id;
     const ticketTypes = await getTicketTypes(token);
     const ticketTypeId = GetTicketTypeId(presentialOption, onlineOption, notHaveHotel, haveHotel, ticketTypes);
@@ -31,8 +23,8 @@ export default function FinishOrderSummary({
       ticketTypeId,
     };
     try {
-      setTicketId(ticketTypeId);
-      createTicket(body, token);
+      const userTicket = await createTicket(body, token);
+      setTicketId(userTicket.id);
       setfirstSreenVisibility(false);
     } catch (error) {
       toast.error('Não foi possível fazer a reserva!');
@@ -47,7 +39,7 @@ export default function FinishOrderSummary({
       </h2>
       <FinishButton
         onClick={() => {
-          saveTicketsInfo(presentialOption, onlineOption, notHaveHotel, haveHotel, token, setTicketId, enrollment);
+          saveTicketsInfo();
         }}
       >
         RESERVAR INGRESSO

@@ -10,7 +10,7 @@ import {
 import FinishOrderSummary from './FinishOrderSummary';
 
 export default function PaymentInformationForm({ 
-  setfirstSreenVisibility, 
+  setfirstSreenVisibility,
   setTicketId,
   presentialOption,
   setPresentialOption,
