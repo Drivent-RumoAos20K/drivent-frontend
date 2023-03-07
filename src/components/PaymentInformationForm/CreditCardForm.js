@@ -55,14 +55,33 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
     return Number(month) <= 12;
   }
 
+  function isValidDate(date) {
+    if(dayjs(date) <= dayjs()) {
+      return false;
+    }
+    return true;
+  }
+
   async function handleSubmit() {
     if (!form.cvc || !form.expiry || !form.name || !form.number) {
       return toast.warning('Todos os dados são necessários');
     }
 
+    if (form.cvc.length !== 3) {
+      return toast.warning('CVC precisar ter 3 dígitos');
+    }
+
+    if(dayjs(form.expiry) > dayjs()) {
+      return toast.warning('Data de expiração inválida');
+    }
+
+    if(form.number.length < 15) {
+      return toast.warning('Número do cartão precisa ter pelo menos 15 dígitos');
+    }
+
     const expirationDate = '20' + form.expiry[3] + form.expiry[4] + '-' + form.expiry[0] + form.expiry[1];
     const month = expirationDate[5] + expirationDate[6];
-    if (!isValidMonth(month)) {
+    if (!isValidMonth(month) || !isValidDate(expirationDate)) {
       return toast.warning('Insira uma data de expiração válida');
     }
 
@@ -80,6 +99,7 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
       toast('Pagamento efetuado com sucesso.');
       setPaymentConfirmed(true);
     } catch (err) {
+      console.log(err);
       toast.error('Algo deu errado, por favor tente mais tarde.');
     }
   }
