@@ -21,35 +21,35 @@ export default function NavigationBar() {
 
   return (
     <Container>
-      <Link to="/dashboard/subscription">
+      <Link to='/dashboard/subscription'>
         <NavigationButton active={isActive('/dashboard/subscription')}>
           <FaFileContract />
           <span>Inscrição</span>
         </NavigationButton>
       </Link>
 
-      <Link to="/dashboard/payment">
+      <Link to='/dashboard/payment'>
         <NavigationButton active={isActive('/dashboard/paymen')}>
           <FaMoneyBill />
           <span>Pagamento</span>
         </NavigationButton>
       </Link>
 
-      <Link to="/dashboard/hotel">
+      <Link to='/dashboard/hotel'>
         <NavigationButton active={isActive('/dashboard/hote')}>
           <FaBed />
           <span>Hotel</span>
         </NavigationButton>
       </Link>
 
-      <Link to="/dashboard/activities">
+      <Link to='/dashboard/activities'>
         <NavigationButton active={isActive('/dashboard/activitie')}>
           <FaCalendarWeek />
           <span>Atividades</span>
         </NavigationButton>
       </Link>
 
-      <Link to="/dashboard/certificate">
+      <Link to='/dashboard/certificate'>
         <NavigationButton active={isActive('/dashboard/certificat')}>
           <FaCertificate />
           <span>Certificado</span>
