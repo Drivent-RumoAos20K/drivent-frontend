@@ -8,6 +8,7 @@ import HotelInformationForm from '../../components/HotelsInformationForm';
 export default function HotelChoose({ dataHotels }) {
   const { userData } = useContext(UserContext);
   const [paid, setPaid] = useState(false);
+
   useEffect(() => {
     exisTicketPaid();
   }, [paid]);
