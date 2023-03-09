@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import { useContext } from 'react';
-import { useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
 import { getTicket } from '../../services/ticketApi';
-import { toast } from 'react-toastify';
 
-export default function HotelChoose() {
+import HotelInformationForm from '../../components/HotelsInformationForm';
+
+export default function HotelChoose({ dataHotels }) {
   const { userData } = useContext(UserContext);
   const [paid, setPaid] = useState(false);
   useEffect(() => {
@@ -18,27 +17,37 @@ export default function HotelChoose() {
     if (ticketPaid.status === 'PAID') {
       setPaid(true);
     }
-  };
+  }
   return (
     <>
-      {paid &&
-        <div>tudo certo bro</div>
-      }
-      {!paid &&
-        <Title>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</Title>
-      }
+      {paid && (
+        <div>
+          <StyledTypography>Escolha de hotel e quarto</StyledTypography>
+          <HotelInformationForm dataHotels={dataHotels} />
+        </div>
+      )}
+      {!paid && <Title>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</Title>}
     </>
   );
-};
+}
 
 const Title = styled.div`
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
 
-    color: #8E8E8E;
+  color: #8e8e8e;
+`;
 
+const StyledTypography = styled.div`
+  position: relative;
+  font-size: 2.125rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.235;
+  letter-spacing: 0.00735em;
+  margin-bottom: 30px;
 `;
