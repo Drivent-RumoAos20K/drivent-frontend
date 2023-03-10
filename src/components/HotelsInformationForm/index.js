@@ -3,10 +3,21 @@ import { useState } from 'react';
 import HotelChoices from './HotelChoices';
 import { ContainerHotel, Title } from './HotelsWrapper';
 import RoomChoises from './RoomChoises';
+import useBooking from '../../hooks/api/useBooking';
+import { toast } from 'react-toastify';
 
 export default function HotelInformationForm({ dataHotels }) {
   const [selectedHotelId, setSelectedHotelId] = useState(undefined);
   const [selectedRoom, setSelectedRoom] = useState(undefined);
+  const { bookRoom } = useBooking();
+
+  async function tryBookRoom() {
+    try{
+      await bookRoom(selectedRoom);
+    }catch(err) {
+      toast.warning(err);
+    }
+  }
 
   return (
     <>
@@ -35,7 +46,9 @@ export default function HotelInformationForm({ dataHotels }) {
         />
 
         {selectedRoom && 
-          <Button>
+          <Button
+            onClick={() => tryBookRoom('a')}
+          >
             Reservar Quarto
           </Button>
         }
