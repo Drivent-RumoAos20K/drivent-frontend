@@ -11,6 +11,7 @@ export const Title = styled.h2`
 
 export const ContainerHotel = styled.div`
   display: flex;
+  padding-bottom: 20px;
 `;
 
 export const Hotel = styled.div`

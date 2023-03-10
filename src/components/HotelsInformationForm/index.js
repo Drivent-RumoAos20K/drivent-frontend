@@ -5,7 +5,6 @@ import RoomChoises from './RoomChoises';
 
 export default function HotelInformationForm({ dataHotels }) {
   const [selectedHotelId, setSelectedHotelId] = useState(undefined);
-  const [isLoading, setIsLoading] = useState((true));
 
   return (
     <>
@@ -25,7 +24,7 @@ export default function HotelInformationForm({ dataHotels }) {
 
       {selectedHotelId && 
       <>
-        <h1>Ótima escolha! Agora escolha seu quarto:</h1>
+        <Title>Ótima pedida! Agora escolha seu quarto:</Title>
         <RoomChoises
           selectedHotelId={selectedHotelId}
         />

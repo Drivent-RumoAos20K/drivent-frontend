@@ -11,7 +11,7 @@ export default function useHotel() {
     loading: hotelLoading,
     error: hotelError,
     act: getHotel,
-  } = useAsync((id) => HotelsApi.getHotelById(token, id), false);
+  } = useAsync((hotelId) => HotelsApi.getHotelById(token, hotelId), false);
 
   return {
     hotel,
