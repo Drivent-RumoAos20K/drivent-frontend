@@ -52,6 +52,7 @@ export const ContainerData = styled.div`
     line-height: 14.06px;
     margin-bottom: 3px;
   }
+  
   p {
     line-height: 14.06px;
   }
