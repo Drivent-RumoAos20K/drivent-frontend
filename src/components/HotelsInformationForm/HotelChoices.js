@@ -4,40 +4,53 @@ import { ContainerData, Hotel } from './HotelsWrapper';
 
 export default function HotelChoices({ id, image, name }) {
   const { getHotel } = useHotel();
+
   const [rooms, setRooms] = useState([]);
-  const [dataText, setOptions] = useState([]);
+  const [dataText, setDataText] = useState([]);
+  const [vacancies, setVacancies] = useState([]);
 
   useEffect(() => {
     if (id) {
       getHotel(id).then((res) => {
         setRooms(res.Rooms);
+        countVacancies(res.Rooms);
       });
     }
   }, []);
 
+  function countVacancies(data) {
+    setVacancies(data.reduce((acc, curr) => acc + curr.capacity, 0));
+  }
+
   useEffect(() => {
-    if(rooms.length>0) {
+    if (rooms.length > 0) {
       let aux = [];
-      const capacities = rooms.map(el => el.capacity);
-      if(capacities.includes(1)) {
+      const capacities = rooms.map((el) => el.capacity);
+
+      if (capacities.includes(1)) {
         aux.push('Single');
       }
-      if(capacities.includes(2)) {
+
+      if (capacities.includes(2)) {
         aux.push('Double');
       }
-      if(capacities.includes(3)) {
+
+      if (capacities.includes(3)) {
         aux.push('Triple');
-      };
-      if(aux.length > 1) {
-        aux.splice(aux.length-1, 0, ' e ');
       }
-      if(aux.length > 3) {
+
+      if (aux.length > 1) {
+        aux.splice(aux.length - 1, 0, ' e ');
+      }
+
+      if (aux.length > 3) {
         aux.splice(1, 0, ', ');
       }
+
       const aux2 = aux.reduce((acc, cur, i, arr) => {
-        return (acc+cur);
-      }, ' ');  
-      setOptions(aux2);
+        return acc + cur;
+      }, ' ');
+      setDataText(aux2);
     }
   }, [rooms]);
 
@@ -52,7 +65,7 @@ export default function HotelChoices({ id, image, name }) {
         </ContainerData>
         <ContainerData>
           <h3>Vagas Disponíveis</h3>
-          <p>vagas</p>
+          <p>{vacancies}</p>
         </ContainerData>
       </div>
     </Hotel>
