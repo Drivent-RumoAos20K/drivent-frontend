@@ -18,6 +18,7 @@ export default function RoomChoises({ selectedRoom, setSelectedRoom, selectedHot
       {rooms.map((r) => 
         <Room
           setSelectedRoom={setSelectedRoom}
+          bookedRooms={r._count.Booking}
           isSelcted={selectedRoom === r.id}
           key={r.id}
           id={r.id}

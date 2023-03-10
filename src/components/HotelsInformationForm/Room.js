@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function Room({ isSelcted, id, capacity, name, setSelectedRoom }) {
+export default function Room({  bookedRooms, isSelcted, id, capacity, name, setSelectedRoom }) {
+  const [isValid] = useState(bookedRooms >= capacity);
+  
   function getCapacityAmount() {
     let arr = [];
     for(let i = 0; i < capacity; i++) {
       arr.push(
         <span>
-          {i === 0 ?
+          {bookedRooms <= i ?
             <ion-icon 
               name = "person-outline"
             />
@@ -18,16 +21,19 @@ export default function Room({ isSelcted, id, capacity, name, setSelectedRoom })
         </span>
       );
     }
+    arr.reverse();
     return arr;
   }
 
   return (
     <RoomStyle
-      color={ isSelcted ? '#FFEED2' : 'initial' }
-      onClick={() => setSelectedRoom(id)}>
+      color={ isValid ? '#E9E9E9' : isSelcted ? '#FCE8C3' : 'initial' }
+      onClick={() => setSelectedRoom(id)}
+      disabled={isValid}
+    >
       <h1>{name}</h1>
       <UsersDiv
-        color={isSelcted ? '#FF4791' : 'initial'}  
+        color={isValid ? '#8C8C8C' : 'inital'}  
       >
         {getCapacityAmount()}
       </UsersDiv>
@@ -35,7 +41,7 @@ export default function Room({ isSelcted, id, capacity, name, setSelectedRoom })
   );
 };
 
-const RoomStyle = styled.li`
+const RoomStyle = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
