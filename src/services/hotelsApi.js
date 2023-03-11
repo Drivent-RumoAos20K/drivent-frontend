@@ -18,4 +18,15 @@ export async function getHotelById(token, id) {
   });
 
   return response.data;
-}
+};
+
+export async function getBookinglById(token) {
+  const response = await api.get('/booking', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
+
