@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PaymentCardForm from '../../../components/PaymentCardForm';
 import PaymentConfirmation from '../../../components/PaymentConfirmation';
 import PaymentInformationForm from '../../../components/PaymentInformationForm';
 import { ContainerMain, ContainerOption } from '../../../components/PaymentInformationForm/PaymentWrapper';
+import UserContext from '../../../contexts/UserContext';
 import useEnrollment from '../../../hooks/api/useEnrollment';
 
 export default function Payment() {
@@ -16,6 +17,14 @@ export default function Payment() {
   const [onlineOption, setOnlineOption] = useState(false);
   const [haveHotel, setHaveHotel] = useState(false);
   const [notHaveHotel, setNotHaveHotel] = useState(false);
+  const { userData } = useContext(UserContext);
+
+  useEffect(() => {
+    if (userData.statusPayment === 'PAID') {
+      setfirstSreenVisibility(false);
+      setPaymentConfirmed(true);
+    }
+  });
 
   function getTicketModality() {
     if (!presentialOption) {
