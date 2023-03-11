@@ -4,10 +4,12 @@ import UserContext from '../../contexts/UserContext';
 import { getTicket } from '../../services/ticketApi';
 
 import HotelInformationForm from '../../components/HotelsInformationForm';
+import { StepIcon } from '@material-ui/core';
 
 export default function HotelChoose({ dataHotels }) {
   const { userData } = useContext(UserContext);
   const [paid, setPaid] = useState(false);
+  
   useEffect(() => {
     exisTicketPaid();
   }, [paid]);
@@ -18,6 +20,7 @@ export default function HotelChoose({ dataHotels }) {
       setPaid(true);
     }
   }
+
   return (
     <>
       {paid && (
@@ -50,4 +53,5 @@ const StyledTypography = styled.div`
   line-height: 1.235;
   letter-spacing: 0.00735em;
   margin-bottom: 30px;
+  padding-right:300px;
 `;
