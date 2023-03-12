@@ -2,14 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
 import { getTicket } from '../../services/ticketApi';
-
 import HotelInformationForm from '../../components/HotelsInformationForm';
-import { StepIcon } from '@material-ui/core';
 
 export default function HotelChoose({ dataHotels }) {
   const { userData } = useContext(UserContext);
   const [paid, setPaid] = useState(false);
-  
   useEffect(() => {
     exisTicketPaid();
   }, [paid]);

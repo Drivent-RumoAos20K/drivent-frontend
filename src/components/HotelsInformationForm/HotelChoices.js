@@ -2,7 +2,15 @@ import { useEffect, useState } from 'react';
 import useHotel from '../../hooks/api/useHotelById';
 import { ContainerData, Hotel } from './HotelsWrapper';
 
-export default function HotelChoices({ id, image, name, setInfoHotel, reservar }) {
+export default function HotelChoices({
+  setSelectedRoom,
+  setSelectedHotelId,
+  isSelected,
+  id,
+  image,
+  name,
+  setInfoHotel,
+}) {
   const { getHotel } = useHotel();
 
   const [rooms, setRooms] = useState([]);
@@ -55,8 +63,15 @@ export default function HotelChoices({ id, image, name, setInfoHotel, reservar }
   }, [rooms]);
 
   return (
-    <Hotel onClick={() => setInfoHotel([name, image])}>
-      <img src={image} alt={image} onClick={reservar} />
+    <Hotel
+      onClick={() => {
+        setInfoHotel([name, image]);
+        setSelectedHotelId(id);
+        setSelectedRoom(undefined);
+      }}
+      bgColor={isSelected ? '#FDEED2' : '#ebebeb'}
+    >
+      <img src={image} alt={image} />
       <div className="hotelName">{name}</div>
       <div className="hotelInfo">
         <ContainerData>
