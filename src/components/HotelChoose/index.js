@@ -7,32 +7,34 @@ import { getTicket } from '../../services/ticketApi';
 export default function HotelChoose({ dataHotels }) {
   const { userData } = useContext(UserContext);
   const [ticket, setTicket] = useState(undefined);
-  useEffect(() => {
+ 
+  useEffect(async() => {
     exisTicketPaid();
-  }, [ticket]);
+  }, []);
 
   async function exisTicketPaid() {
-    const ticketPaid = await getTicket(userData.token);
-    console.log(ticketPaid);
-    setTicket(ticketPaid);
+    const ticketData = await getTicket(userData.token);
+    setTicket(ticketData);
   }
 
-  return (
-    <>
-      {ticket.status === 'PAID' ? (
-        !ticket.TicketType.isRemote ? (
-          <div>
-            <StyledTypography>Escolha de hotel e quarto</StyledTypography>
-            <HotelInformationForm dataHotels={dataHotels} />
-          </div>
-        ) : (
-          <Title>Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</Title>
-        )
-      ) : (
-        <Title>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</Title>
-      )}
-    </>
-  );
+  function showDisplay() {
+    if(!ticket || ticket.status !== 'PAID') {
+      return <Title>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</Title>;
+    }
+    
+    if(!ticket.TicketType.includesHotel) {
+      return <Title>Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</Title>;
+    };
+
+    return (
+      <div>
+        <StyledTypography>Escolha de hotel e quarto</StyledTypography>
+        <HotelInformationForm dataHotels={dataHotels} />
+      </div>
+    );
+  }
+
+  return showDisplay();
 }
 
 const Title = styled.div`
@@ -42,6 +44,7 @@ const Title = styled.div`
   font-size: 20px;
   line-height: 23px;
   text-align: center;
+  font-family: "Lexend Deca", sans-serif;
 
   color: #8e8e8e;
 `;
