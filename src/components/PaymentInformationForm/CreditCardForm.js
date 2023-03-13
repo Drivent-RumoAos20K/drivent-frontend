@@ -5,7 +5,6 @@ import 'react-credit-cards-2/es/styles-compiled.css';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import { processPayment } from '../../services/paymentApi';
 import Button from '../Form/Button';
 
@@ -100,10 +99,9 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
       toast('Pagamento efetuado com sucesso.');
       setPaymentConfirmed(true);
     } catch (err) {
-      console.log(err);
       toast.error('Algo deu errado, por favor tente mais tarde.');
     }
-  }
+  } 
 
   return (
     <ContainerCreditCardForm display={cardVisibility ? 'flex' : 'none'}>

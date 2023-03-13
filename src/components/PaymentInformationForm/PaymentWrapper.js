@@ -35,7 +35,6 @@ export const ContainerOption = styled.div`
  
   
   h1{
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -47,7 +46,6 @@ export const ContainerOption = styled.div`
 
   }
   h2{
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
