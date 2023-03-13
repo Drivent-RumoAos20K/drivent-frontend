@@ -26,6 +26,7 @@ export default function HotelInformationForm({ dataHotels }) {
   useEffect(async() => {
     const booking = await getBookinglById(userData.token);
     setBooking(booking);
+    console.log(booking);
     if (booking) {
       setItsReserved(true);
     }
@@ -95,7 +96,7 @@ export default function HotelInformationForm({ dataHotels }) {
       {ItsReserved && (
         <Cont>
           <HotelInfoFinal>
-            <img src={InfoHotel[1] || booking.Room.Hotel.image} />
+            <img src={InfoHotel[1] || booking.Room.Hotel.image} alt="Hotel" />
             <div>
               <h1>{InfoHotel[0] || booking.Room.Hotel.name}</h1>
               <h2>Quarto reservado</h2>

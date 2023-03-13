@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import HotelChoose from '../../../components/HotelChoose';
 
@@ -13,7 +14,9 @@ export default function Hotel() {
       .then((res) => {
         setDataHotels(res);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        toast(err);
+      });
   }, []);
 
   return (
