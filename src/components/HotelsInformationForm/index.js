@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
 import useBooking from '../../hooks/api/useBooking';
+import useToken from '../../hooks/useToken';
+import { tryChangeRoom } from '../../services/bookingApi';
 import { getBookinglById } from '../../services/hotelsApi';
 import Button from '../Form/Button';
 import HotelChoices from './HotelChoices';
@@ -17,6 +19,8 @@ export default function HotelInformationForm({ dataHotels }) {
   const [typeOfRoom, setTypeOfRoom] = useState();
   const [selectedHotelId, setSelectedHotelId] = useState(undefined);
   const [selectedRoom, setSelectedRoom] = useState(undefined);
+  const [changeRoom, setChangeRoom] = useState(false);
+  const token = useToken();
   const { bookRoom } = useBooking();
 
   useEffect(async() => {
@@ -41,13 +45,21 @@ export default function HotelInformationForm({ dataHotels }) {
       await bookRoom(selectedRoom);
       const booking = await getBookinglById(userData.token);
       setBooking(booking);
-      console.log('booking criado: ', booking);
       setItsReserved(true);
+      toast.success('Quarto reservado com sucesso!');
     } catch (err) {
       toast.warning(err);
     }
   }
-  console.log(dataHotels);
+
+  async function handleSubmitChangeRoom() {
+    try {
+      await tryChangeRoom(selectedRoom, booking.Room.id, token);
+      toast.success('Quarto alterado com sucesso!');
+    } catch (err) {
+      toast.warning(err);
+    }
+  }
   return (
     <>
       {!ItsReserved && (
@@ -75,7 +87,6 @@ export default function HotelInformationForm({ dataHotels }) {
                 selectedRoom={selectedRoom}
                 selectedHotelId={selectedHotelId}
               />
-
               {selectedRoom && <Button onClick={() => tryBookRoom()}>Reservar Quarto</Button>}
             </>
           )}
@@ -99,7 +110,33 @@ export default function HotelInformationForm({ dataHotels }) {
               )}
             </div>
           </HotelInfoFinal>
-          <ButtonToggle>TROCAR DE QUARTO</ButtonToggle>
+          {changeRoom && (
+            <RoomChoises
+              setSelectedRoom={setSelectedRoom}
+              selectedRoom={selectedRoom}
+              selectedHotelId={selectedHotelId}
+            />
+          )}
+          {!changeRoom ? (
+            <ButtonToggle
+              onClick={() => {
+                setSelectedHotelId(booking.Room.hotelId);
+                setChangeRoom(true);
+              }}
+            >
+              TROCAR DE QUARTO
+            </ButtonToggle>
+          ) : (
+            <ButtonToggle
+              onClick={() => {
+                setSelectedHotelId(booking.Room.hotelId);
+                handleSubmitChangeRoom();
+                setChangeRoom(false);
+              }}
+            >
+              RESERVAR QUARTO
+            </ButtonToggle>
+          )}
         </Cont>
       )}
     </>
@@ -109,8 +146,8 @@ export default function HotelInformationForm({ dataHotels }) {
 const Cont = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-right: 500px;
+  width: 100%;
+  /* align-items: center; */
 `;
 
 const HotelInfoFinal = styled.div`

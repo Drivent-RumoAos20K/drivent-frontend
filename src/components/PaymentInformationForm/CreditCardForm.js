@@ -98,9 +98,9 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
       };
       await processPayment(body, userData.token);
       toast('Pagamento efetuado com sucesso.');
-      useLocalStorage();
       setPaymentConfirmed(true);
     } catch (err) {
+      console.log(err);
       toast.error('Algo deu errado, por favor tente mais tarde.');
     }
   }

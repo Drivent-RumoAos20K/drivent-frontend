@@ -33,6 +33,6 @@ export default function RoomChoises({ selectedRoom, setSelectedRoom, selectedHot
 const RoomsContainer = styled.ul`
   display: flex;
   height: fit-content;
-  max-width: 600px;
+  max-width: 90%;
   flex-wrap: wrap;
 `;

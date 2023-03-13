@@ -1,11 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PaymentCardForm from '../../../components/PaymentCardForm';
 import PaymentConfirmation from '../../../components/PaymentConfirmation';
 import PaymentInformationForm from '../../../components/PaymentInformationForm';
 import { ContainerMain, ContainerOption } from '../../../components/PaymentInformationForm/PaymentWrapper';
-import UserContext from '../../../contexts/UserContext';
 import useEnrollment from '../../../hooks/api/useEnrollment';
+import useToken from '../../../hooks/useToken';
+import { getTicket } from '../../../services/ticketApi';
 
 export default function Payment() {
   const { enrollment } = useEnrollment();
@@ -17,14 +18,26 @@ export default function Payment() {
   const [onlineOption, setOnlineOption] = useState(false);
   const [haveHotel, setHaveHotel] = useState(false);
   const [notHaveHotel, setNotHaveHotel] = useState(false);
-  const { userData } = useContext(UserContext);
+  const [ticket, setTicket] = useState(undefined);
+  const token = useToken();
 
-  useEffect(() => {
-    if (userData.statusPayment === 'PAID') {
+  useEffect(async() => {
+    const ticketData = await getTicket(token);
+    setTicket(ticketData);
+    if (ticketData.status === 'PAID') {
       setfirstSreenVisibility(false);
       setPaymentConfirmed(true);
     }
-  });
+  }, []);
+
+  function showTicketPaid() {
+    return (
+      <>
+        <h1>{ticket.TicketType.isRemote ? 'Online' : 'Presencial'}</h1>
+        <h2>{`R$ ${ticket.TicketType.price}`}</h2>
+      </>
+    );
+  }
 
   function getTicketModality() {
     if (!presentialOption) {
@@ -81,7 +94,7 @@ export default function Payment() {
               <ContainerMain>
                 <SubTitle>Ingresso escolhido</SubTitle>
                 <ContainerOption width="250px" height="100px" selected={true}>
-                  {getTicketModality()}
+                  {ticket ? showTicketPaid() : getTicketModality()}
                 </ContainerOption>
               </ContainerMain>
               <SubTitle>Pagamento</SubTitle>
