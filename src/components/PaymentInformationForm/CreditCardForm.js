@@ -5,6 +5,7 @@ import 'react-credit-cards-2/es/styles-compiled.css';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import { processPayment } from '../../services/paymentApi';
 import Button from '../Form/Button';
 
@@ -56,7 +57,7 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
   }
 
   function isValidDate(date) {
-    if(dayjs(date) <= dayjs()) {
+    if (dayjs(date) <= dayjs()) {
       return false;
     }
     return true;
@@ -71,11 +72,11 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
       return toast.warning('CVC precisar ter 3 dígitos');
     }
 
-    if(dayjs(form.expiry) > dayjs()) {
+    if (dayjs(form.expiry) > dayjs()) {
       return toast.warning('Data de expiração inválida');
     }
 
-    if(form.number.length < 15) {
+    if (form.number.length < 15) {
       return toast.warning('Número do cartão precisa ter pelo menos 15 dígitos');
     }
 
@@ -99,6 +100,7 @@ export default function CreditCardForm({ cardVisibility, ticketId, setPaymentCon
       toast('Pagamento efetuado com sucesso.');
       setPaymentConfirmed(true);
     } catch (err) {
+      console.log(err);
       toast.error('Algo deu errado, por favor tente mais tarde.');
     }
   }

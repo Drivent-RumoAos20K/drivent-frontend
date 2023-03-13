@@ -13,9 +13,7 @@ export default function Hotel() {
       .then((res) => {
         setDataHotels(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   return (
@@ -27,8 +25,8 @@ export default function Hotel() {
 
 const Cont = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   width: 100%;
   height: 100%;
 `;

@@ -11,10 +11,11 @@ export const Title = styled.h2`
 
 export const ContainerHotel = styled.div`
   display: flex;
+  padding-bottom: 20px;
 `;
 
 export const Hotel = styled.div`
-  background-color: #ebebeb;
+  background-color: ${({ bgColor }) => bgColor };
   border-radius: 10px;
   width: 196px;
   height: 264px;
@@ -24,7 +25,6 @@ export const Hotel = styled.div`
   padding: 14px;
   margin-right: 20px;
   cursor: pointer;
-  background-color: #ebebeb;
 
   img {
     width: 168px;
