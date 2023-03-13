@@ -19,16 +19,30 @@ export default function HotelChoose({ dataHotels }) {
 
   function showDisplay() {
     if(!ticket || ticket.status !== 'PAID') {
-      return <Title>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</Title>;
+      return (
+        <Container>
+          <StyledTypography>Escolha de hotel e quarto</StyledTypography>
+          <WarningWrapper>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</WarningWrapper>
+        </Container>
+      )
+      ;
     }
     
     if(!ticket.TicketType.includesHotel) {
-      return <Title>Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</Title>;
+      return (
+        <Container>
+          <StyledTypography>Escolha de hotel e quarto</StyledTypography>
+          <WarningWrapper>
+            Sua modalidade de Ingresso não inclui hospedagem
+            Prossiga para escolha de atividades.
+          </WarningWrapper>
+        </Container>
+      )
+      ;
     };
 
     return (
       <div>
-        <StyledTypography>Escolha de hotel e quarto</StyledTypography>
         <HotelInformationForm dataHotels={dataHotels} />
       </div>
     );
@@ -36,6 +50,10 @@ export default function HotelChoose({ dataHotels }) {
 
   return showDisplay();
 }
+
+const Container = styled.div`
+  flex-direction: column;
+`;
 
 const Title = styled.div`
   font-family: 'Roboto';
@@ -58,4 +76,19 @@ const StyledTypography = styled.div`
   letter-spacing: 0.00735em;
   margin-bottom: 30px;
   padding-right: 300px;
+`;
+
+const WarningWrapper = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  padding: 0px 230px;
+  margin-top: 250px;
+  text-align: center;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: #8e8e8e;
 `;
