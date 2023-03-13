@@ -43,6 +43,7 @@ export default function HotelChoose({ dataHotels }) {
 
     return (
       <div>
+        <StyledTypography>Escolha de hotel e quarto</StyledTypography>
         <HotelInformationForm dataHotels={dataHotels} />
       </div>
     );
@@ -53,18 +54,6 @@ export default function HotelChoose({ dataHotels }) {
 
 const Container = styled.div`
   flex-direction: column;
-`;
-
-const Title = styled.div`
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 23px;
-  text-align: center;
-  font-family: "Lexend Deca", sans-serif;
-
-  color: #8e8e8e;
 `;
 
 const StyledTypography = styled.div`
