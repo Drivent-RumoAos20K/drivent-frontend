@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getActivities } from '../../services/activities';
 
-function FilterActivities({ day, setInfoDay }) {
-  function getDataOfDay() {
-    setInfoDay(`Aqui vão os dados do dia ${day}`);
+function FilterActivities({ day, setInfoDay, token }) {
+  async function getDataOfDay() {
+    const activities = await getActivities(day.id, token);
+    console.log(activities);
   }
   return <Filter onClick={getDataOfDay}>{day}</Filter>;
 }
