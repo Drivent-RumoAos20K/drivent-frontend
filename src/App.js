@@ -1,20 +1,17 @@
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate
+  BrowserRouter as Router, Navigate, Route, Routes
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import Countdown from './pages/Countdown';
-import Enroll from './pages/Enroll';
-import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
-import FillSubscription from './pages/Dashboard/FillSubscription';
-import Payment from './pages/Dashboard/Payment';
-import Hotel from './pages/Dashboard/Hotel';
 import Activities from './pages/Dashboard/Activities';
 import Certificate from './pages/Dashboard/Certificate';
+import FillSubscription from './pages/Dashboard/FillSubscription';
+import Hotel from './pages/Dashboard/Hotel';
+import Payment from './pages/Dashboard/Payment';
+import Enroll from './pages/Enroll';
+import SignIn from './pages/SignIn';
 
 import { EventInfoProvider } from './contexts/EventInfoContext';
 import { UserProvider } from './contexts/UserContext';
