@@ -1,8 +1,18 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import ActivitiesInformationForm from '../../../components/ActivitiesInformationForm';
+import FilterActivities from '../../../components/filterActivities';
 import useTicket from '../../../hooks/api/useTicket';
+import useToken from '../../../hooks/useToken';
+import { StyledTypography, SubTitle } from '../Payment';
 
 export default function Activities() {
+  const [infoDay, setInfoDay] = useState(null);
+  const token = useToken();
+  const days = [
+    { id: 1, date: new Date('2023-03-24T03:24:00') },
+    { id: 2, date: new Date('2023-03-25T03:24:00') },
+    { id: 3, date: new Date('2023-03-26T03:24:00') },
+  ];
   const { ticket } = useTicket();
 
   function showDisplay() {
@@ -27,10 +37,16 @@ export default function Activities() {
     }
 
     return (
-      <div>
+      <>
         <StyledTypography>Escolha de atividades</StyledTypography>
-        <ActivitiesInformationForm />
-      </div>
+        <SubTitle>Primeiro, filtre pelo dia do evento.</SubTitle>
+        <ContainerFilters>
+          {days.map((day) => (
+            <FilterActivities day={day} setInfoDay={setInfoDay} token={token} />
+          ))}
+        </ContainerFilters>
+        <div>{infoDay}</div>
+      </>
     );
   }
 
@@ -41,15 +57,10 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const StyledTypography = styled.div`
-  position: relative;
-  font-size: 2.125rem;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  line-height: 1.235;
-  letter-spacing: 0.00735em;
-  margin-bottom: 30px;
-  padding-right: 300px;
+const ContainerFilters = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
 `;
 
 const WarningWrapper = styled.div`

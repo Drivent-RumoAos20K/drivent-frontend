@@ -111,13 +111,13 @@ export default function Payment() {
   );
 }
 
-const SubTitle = styled.h4`
+export const SubTitle = styled.h4`
   color: #8e8e8e;
   font-size: 20px;
   margin-bottom: 20px;
 `;
 
-const StyledTypography = styled.div`
+export const StyledTypography = styled.div`
   position: relative;
   font-size: 2.125rem;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
