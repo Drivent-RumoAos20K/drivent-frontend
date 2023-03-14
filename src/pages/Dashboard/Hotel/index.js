@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import HotelChoose from '../../../components/HotelChoose';
 
@@ -13,7 +14,9 @@ export default function Hotel() {
       .then((res) => {
         setDataHotels(res);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        toast(err);
+      });
   }, []);
 
   return (
@@ -29,4 +32,5 @@ const Cont = styled.div`
   /* align-items: center; */
   width: 100%;
   height: 100%;
+  height: fit-content; 
 `;

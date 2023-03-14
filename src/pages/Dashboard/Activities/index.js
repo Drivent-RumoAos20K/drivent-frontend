@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import FilterActivities from '../../../components/filterActivities';
+import useTicket from '../../../hooks/api/useTicket';
 import useToken from '../../../hooks/useToken';
 import { StyledTypography, SubTitle } from '../Payment';
 
@@ -12,25 +13,67 @@ export default function Activities() {
     { id: 2, date: new Date('2023-03-25T03:24:00') },
     { id: 3, date: new Date('2023-03-26T03:24:00') },
   ];
-  return (
-    <>
-      <StyledTypography>Escolha de atividades</StyledTypography>
-      <SubTitle>Primeiro, filtre pelo dia do evento.</SubTitle>
-      <ContainerFilters>
-        {days.map((day) => (
-          <FilterActivities day={day} setInfoDay={setInfoDay} token={token} />
-        ))}
-        <FilterActivities day={'Sexta, 22/10'} setInfoDay={setInfoDay} />
-        <FilterActivities day={'Sábado, 23/10'} setInfoDay={setInfoDay} />
-        <FilterActivities day={'Domingo, 24/10'} setInfoDay={setInfoDay} />
-      </ContainerFilters>
-      <div>{infoDay}</div>
-    </>
-  );
+  const { ticket } = useTicket();
+
+  function showDisplay() {
+    if (!ticket || ticket.status !== 'PAID') {
+      return (
+        <Container>
+          <StyledTypography>Escolha de atividades</StyledTypography>
+          <WarningWrapper>Você precisa ter confirmado pagamento antes de fazer a escolha de atividades</WarningWrapper>
+        </Container>
+      );
+    }
+
+    if (!ticket.TicketType.includesHotel) {
+      return (
+        <Container>
+          <StyledTypography>Escolha de atividades</StyledTypography>
+          <WarningWrapper>
+            Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.
+          </WarningWrapper>
+        </Container>
+      );
+    }
+
+    return (
+      <>
+        <StyledTypography>Escolha de atividades</StyledTypography>
+        <SubTitle>Primeiro, filtre pelo dia do evento.</SubTitle>
+        <ContainerFilters>
+          {days.map((day) => (
+            <FilterActivities day={day} setInfoDay={setInfoDay} token={token} />
+          ))}
+        </ContainerFilters>
+        <div>{infoDay}</div>
+      </>
+    );
+  }
+
+  return showDisplay();
 }
+
+const Container = styled.div`
+  flex-direction: column;
+`;
 
 const ContainerFilters = styled.div`
   display: flex;
   gap: 20px;
   margin-top: 20px;
+`;
+
+const WarningWrapper = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  padding: 0px 230px;
+  margin-top: 250px;
+  text-align: center;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: #8e8e8e;
 `;

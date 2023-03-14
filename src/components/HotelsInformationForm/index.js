@@ -87,7 +87,11 @@ export default function HotelInformationForm({ dataHotels }) {
                 selectedRoom={selectedRoom}
                 selectedHotelId={selectedHotelId}
               />
-              {selectedRoom && <Button onClick={() => tryBookRoom()}>Reservar Quarto</Button>}
+              {selectedRoom && 
+                <Button 
+                  onClick={() => tryBookRoom()}
+                >Reservar Quarto</Button>
+              }
             </>
           )}
         </>
@@ -95,7 +99,7 @@ export default function HotelInformationForm({ dataHotels }) {
       {ItsReserved && (
         <Cont>
           <HotelInfoFinal>
-            <img src={InfoHotel[1] || booking.Room.Hotel.image} />
+            <img src={InfoHotel[1] || booking.Room.Hotel.image} alt="Hotel" />
             <div>
               <h1>{InfoHotel[0] || booking.Room.Hotel.name}</h1>
               <h2>Quarto reservado</h2>
@@ -172,7 +176,6 @@ const HotelInfoFinal = styled.div`
     margin-top: 10px;
   }
   h1 {
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -182,22 +185,18 @@ const HotelInfoFinal = styled.div`
     margin-top: 10px;
   }
   h2 {
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
     line-height: 14px;
-    /* identical to box height */
 
     color: #3c3c3c;
   }
   span {
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
     line-height: 14px;
-    /* identical to box height */
 
     color: #3c3c3c;
   }
@@ -212,10 +211,9 @@ const ButtonToggle = styled.button`
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
 
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 50;
   line-height: 16px;
   text-align: center;
 

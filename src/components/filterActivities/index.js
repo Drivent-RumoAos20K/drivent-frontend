@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import styled from 'styled-components';
 import { getActivities } from '../../services/activities';
@@ -7,7 +8,20 @@ function FilterActivities({ day, setInfoDay, token }) {
     const activities = await getActivities(day.id, token);
     console.log(activities);
   }
-  return <Filter onClick={getDataOfDay}>{day}</Filter>;
+
+  function formatDay() {
+    switch (dayjs(day.date).day()) {
+    case 0: return 'Domingo';
+    case 1: return 'Segunda-feira';     
+    case 2: return 'Terça-feira';      
+    case 3: return 'Quarta-feira';      
+    case 4: return 'Quinta-feira';
+    case 5: return 'Sexta-feira';       
+    case 6: return 'Sábado';
+    default: return '';
+    }
+  }
+  return <Filter onClick={getDataOfDay}>{formatDay}</Filter>;
 }
 
 export default FilterActivities;
