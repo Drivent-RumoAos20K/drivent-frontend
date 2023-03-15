@@ -21,11 +21,8 @@ function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
     default: return '';
     }
   }
-  return (
-    <>
-      <Filter onClick={() => getDataOfDay()}>{formatDay}</Filter>
-    </>
-  );
+
+  return <Filter onClick={getDataOfDay}>{formatDay}</Filter>;
 }
 
 export default FilterActivities;
