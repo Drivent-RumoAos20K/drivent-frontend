@@ -7,10 +7,10 @@ export default function ActivitiesContainer({ daySchedule }) {
       {daySchedule.map((s) => 
         <PlaceContainer>
           <span>
-            <h1>{s.place}</h1>
+            <h1>{s.name}</h1>
           </span>
           <PlaceWrapper>
-            <Place activities={s.activities}/>
+            <Place activities={s.Activity}/>
 
           </PlaceWrapper>
         </PlaceContainer>
@@ -23,6 +23,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: fit-content;
+  margin-top: 30px;
 
   @media(max-width: 700px) {
     flex-direction: column;

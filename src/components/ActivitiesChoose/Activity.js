@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
-export default function Activity( { title, interval, intervalValue, vacancies }) {
-  const isAvailable = vacancies > 0; 
+export default function Activity( { name, interval, intervalValue, availableVacancies }) {
+  const isAvailable = availableVacancies > 0; 
   const RED = '#CC6666';
   const GREEN = '#078632';
-  const DEFAULT_ACTIVITY_SIZE = 70;
+  const DEFAULT_ACTIVITY_SIZE = 10;
   const height = ((DEFAULT_ACTIVITY_SIZE * intervalValue))+ 'px';
 
   return (
     <ActivityStyle height={height}>
       <TextDiv>
-        <h1> {title} </h1>
+        <h1> {name} </h1>
         <p> {interval}</p>
       </TextDiv>
       <VacanciesDiv
@@ -28,7 +28,7 @@ export default function Activity( { title, interval, intervalValue, vacancies })
           }
         </IconWrapper>
         {isAvailable ?
-          <p>{vacancies} vagas</p> 
+          <p>{availableVacancies} vagas</p> 
           :
           <p>Esgotado</p>
         }
@@ -44,9 +44,7 @@ const ActivityStyle = styled.li`
 
   background-color: #F1F1F1;
   border-radius: 5px;
-  cursor: pointer;
-
-  margin: 7px 0;
+  margin: 6px 0;
   padding: 10px;
 `;  
 
@@ -67,6 +65,7 @@ const TextDiv = styled.div`
 const VacanciesDiv = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   
   align-items: center;
   justify-content: center;

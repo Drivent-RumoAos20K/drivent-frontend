@@ -1,68 +1,80 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import ActivitiesContainer from '../../../components/ActivitiesChoose/ActivitiesContainer';
+import FilterActivities from '../../../components/filterActivities';
 import useTicket from '../../../hooks/api/useTicket';
-import { Cont } from '../Hotel';
-import ActivitiesChoose from '../../../components/ActivitiesChoose';
+import useToken from '../../../hooks/useToken';
+import { StyledTypography, SubTitle } from '../Payment';
 
 export default function Activities() {
+  const [infoDay, setInfoDay] = useState(null);
+  const token = useToken();
+  const days = [
+    { id: 1, date: new Date('2023-03-24T03:24:00') },
+    { id: 2, date: new Date('2023-03-25T03:24:00') },
+    { id: 3, date: new Date('2023-03-26T03:24:00') },
+  ];
   const { ticket } = useTicket();
 
+  const [daySchedule, setDaySchedule] = useState(undefined);
+
   //mocked data for now
-  const daySchedule = [
-    {
-      day: 'Sexta, 22/10',
-      place: 'Auditório Principal',
-      activities: [
-        {
-          title: 'Minecraft: montando o PC ideal',
-          interval: '09:00 - 10:00',
-          intervalValue: 1,
-          vacancies: 27
-        },
-        {
-          title: 'Lol: montando o PC ideal',
-          interval: '10:00 - 11:00',
-          intervalValue: 1,
-          vacancies: 0
-        },
-        {
-          title: 'Lol: montando o PC ideal',
-          interval: '10:00 - 11:00',
-          intervalValue: 1,
-          vacancies: 0
-        },
-      ]
-    },
-    {
-      day: 'Sexta, 22/10',
-      place: 'Audotório Lateral',
-      activities: [
-        {
-          title: 'Palestra x',
-          interval: '09:00 - 11:00',
-          intervalValue: 2,
-          vacancies: 27
-        }
-      ]
-    },
-    {
-      day: 'Sexta, 22/10',
-      place: 'Sala de Workshop',
-      activities: [
-        {
-          title: 'Palestra y',
-          interval: '09:00 - 10:00',
-          intervalValue: 1,
-          vacancies: 27
-        },
-        {
-          title: 'Palestra z',
-          interval: '10:00 - 11:00',
-          intervalValue: 1,
-          vacancies: 0
-        },
-      ]
-    }
-  ];
+  // const daySchedule = [
+  //   {
+  //     day: 'Sexta, 22/10',
+  //     place: 'Auditório Principal',
+  //     activities: [
+  //       {
+  //         title: 'Minecraft: montando o PC ideal',
+  //         interval: '09:00 - 10:00',
+  //         intervalValue: 1,
+  //         vacancies: 27
+  //       },
+  //       {
+  //         title: 'Lol: montando o PC ideal',
+  //         interval: '10:00 - 11:00',
+  //         intervalValue: 1,
+  //         vacancies: 0
+  //       },
+  //       {
+  //         title: 'Lol: montando o PC ideal',
+  //         interval: '10:00 - 11:00',
+  //         intervalValue: 1,
+  //         vacancies: 0
+  //       },
+  //     ]
+  //   },
+  //   {
+  //     day: 'Sexta, 22/10',
+  //     place: 'Audotório Lateral',
+  //     activities: [
+  //       {
+  //         title: 'Palestra x',
+  //         interval: '09:00 - 11:00',
+  //         intervalValue: 2,
+  //         vacancies: 27
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     day: 'Sexta, 22/10',
+  //     place: 'Sala de Workshop',
+  //     activities: [
+  //       {
+  //         title: 'Palestra y',
+  //         interval: '09:00 - 10:00',
+  //         intervalValue: 1,
+  //         vacancies: 27
+  //       },
+  //       {
+  //         title: 'Palestra z',
+  //         interval: '10:00 - 11:00',
+  //         intervalValue: 1,
+  //         vacancies: 0
+  //       },
+  //     ]
+  //   }
+  // ];
 
   function showDisplay() {
     if (!ticket || ticket.status !== 'PAID') {
@@ -86,9 +98,24 @@ export default function Activities() {
     }
 
     return (
-      <Cont>
-        <ActivitiesChoose daySchedule={daySchedule}/>
-      </Cont>
+      <>
+        <StyledTypography>Escolha de atividades</StyledTypography>
+        <SubTitle>Primeiro, filtre pelo dia do evento.</SubTitle>
+        <ContainerFilters>
+          {days.map((day) => (
+            <FilterActivities 
+              day={day} 
+              setInfoDay={setInfoDay} 
+              token={token} 
+              setDaySchedule={setDaySchedule}
+            />
+          ))}
+        </ContainerFilters>
+        <div>{infoDay}</div>
+        {daySchedule &&
+          <ActivitiesContainer daySchedule={daySchedule}/>
+        }
+      </>
     );
   }
 
@@ -99,15 +126,10 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const StyledTypography = styled.div`
-  position: relative;
-  font-size: 2.125rem;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  line-height: 1.235;
-  letter-spacing: 0.00735em;
-  margin-bottom: 30px;
-  padding-right: 300px;
+const ContainerFilters = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
 `;
 
 const WarningWrapper = styled.div`
