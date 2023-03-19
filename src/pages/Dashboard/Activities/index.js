@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import ActivitiesContainer from '../../../components/ActivitiesChoose/ActivitiesContainer';
 import FilterActivities from '../../../components/filterActivities';
 import useTicket from '../../../hooks/api/useTicket';
 import useToken from '../../../hooks/useToken';
@@ -14,6 +15,8 @@ export default function Activities() {
     { id: 3, date: new Date('2023-03-26T03:24:00') },
   ];
   const { ticket } = useTicket();
+
+  const [daySchedule, setDaySchedule] = useState(undefined);
 
   function showDisplay() {
     if (!ticket || ticket.status !== 'PAID') {
@@ -42,10 +45,18 @@ export default function Activities() {
         <SubTitle>Primeiro, filtre pelo dia do evento.</SubTitle>
         <ContainerFilters>
           {days.map((day) => (
-            <FilterActivities day={day} setInfoDay={setInfoDay} token={token} />
+            <FilterActivities 
+              day={day} 
+              setInfoDay={setInfoDay} 
+              token={token} 
+              setDaySchedule={setDaySchedule}
+            />
           ))}
         </ContainerFilters>
         <div>{infoDay}</div>
+        {daySchedule &&
+          <ActivitiesContainer daySchedule={daySchedule}/>
+        }
       </>
     );
   }

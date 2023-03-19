@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getActivities } from '../../services/activities';
 
-function FilterActivities({ day, setInfoDay, token }) {
+function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
   const [dayName, setDayName] = useState('');
+  
   async function getDataOfDay() {
-    const activities = await getActivities(day.id, token);
-    console.log(activities);
+    const dayScheduleNow = await getActivities(day.id, token);
+    setDaySchedule(dayScheduleNow.data);
   }
 
   useEffect(() => {
@@ -26,8 +27,8 @@ function FilterActivities({ day, setInfoDay, token }) {
     default: return '';
     }
   }
+  
   return <Filter onClick={getDataOfDay}>{dayName}</Filter>;
-}
 
 export default FilterActivities;
 
