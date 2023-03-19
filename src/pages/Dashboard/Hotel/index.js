@@ -26,7 +26,7 @@ export default function Hotel() {
   );
 }
 
-const Cont = styled.div`
+export const Cont = styled.div`
   display: flex;
   /* justify-content: center; */
   /* align-items: center; */

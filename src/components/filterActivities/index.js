@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { getActivities } from '../../services/activities';
 
-function FilterActivities({ day, setInfoDay, token }) {
+function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
   async function getDataOfDay() {
-    const activities = await getActivities(day.id, token);
-    console.log(activities);
+    const dayScheduleNow = await getActivities(day.id, token);
+    setDaySchedule(dayScheduleNow.data);
   }
 
   function formatDay() {
@@ -21,6 +21,7 @@ function FilterActivities({ day, setInfoDay, token }) {
     default: return '';
     }
   }
+
   return <Filter onClick={getDataOfDay}>{formatDay}</Filter>;
 }
 

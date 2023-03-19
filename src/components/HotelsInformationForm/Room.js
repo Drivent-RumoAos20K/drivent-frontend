@@ -9,16 +9,28 @@ export default function Room({  bookedRooms, isSelcted, id, capacity, name, setS
     for(let i = 0; i < capacity; i++) {
       arr.push(
         <span>
-          {bookedRooms <= i ?
-            <ion-icon 
-              name = "person-outline"
-            />
+          {(i === 0 && isSelcted) && (bookedRooms <= i)?
+            <Icon color="#FF4791">
+              <ion-Icon
+                name = "person"
+              />
+            </Icon>
             :
-            <ion-icon 
-              name = "person"
-            />
-          }
-        </span>
+            ( bookedRooms <= i ?
+              <Icon>
+                <ion-Icon
+                  name = "person-outline"
+                />
+              </Icon>
+              :
+              <Icon>
+                <ion-Icon
+                  name = "person"
+                />
+              </Icon>
+            )
+          } 
+        </span>          
       );
     }
     arr.reverse();
@@ -67,4 +79,9 @@ const UsersDiv = styled.div`
     font-size: 20px;
     color: ${({ color }) => color};
   }
+`;
+
+const Icon = styled.span `
+  color: ${({ color }) => color};
+  transition: none;
 `;
