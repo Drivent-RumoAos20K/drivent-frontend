@@ -1,13 +1,19 @@
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getActivities } from '../../services/activities';
 
 function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
+  const [dayName, setDayName] = useState('');
+  
   async function getDataOfDay() {
     const dayScheduleNow = await getActivities(day.id, token);
     setDaySchedule(dayScheduleNow.data);
   }
+
+  useEffect(() => {
+    setDayName(formatDay());
+  }, [day]);
 
   function formatDay() {
     switch (dayjs(day.date).day()) {
@@ -21,9 +27,8 @@ function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
     default: return '';
     }
   }
-
-  return <Filter onClick={getDataOfDay}>{formatDay}</Filter>;
-}
+  
+  return <Filter onClick={getDataOfDay}>{dayName}</Filter>;
 
 export default FilterActivities;
 
