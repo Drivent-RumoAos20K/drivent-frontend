@@ -7,3 +7,19 @@ export async function getActivities(dayId, token) {
     },
   });
 }
+
+export async function signUpActivity(id, token) {
+  return await api.put(`activities/${id}`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getActivitiesUser(token) {
+  return await api.get('activities', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}

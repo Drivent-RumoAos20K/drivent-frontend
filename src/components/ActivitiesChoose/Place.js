@@ -5,7 +5,7 @@ export default function Place({ activities }) {
   function calculteInterval(startsAt, endsAt) {
     const timeStarts = dayjs(startsAt).format('HH:MM');
     const timeEnds = dayjs(endsAt).format('HH:MM');
-    return  `${timeStarts} - ${timeEnds}`;
+    return `${timeStarts} - ${timeEnds}`;
   }
 
   function calculateVacancies(capacity, registeredUsersAmount) {
@@ -17,18 +17,18 @@ export default function Place({ activities }) {
     const UNIT = 10;
     const timeStarts = dayjs(startsAt);
     const timeEnds = dayjs(endsAt);
-    const differenceInMinutes = timeEnds.diff(timeStarts, 'minutes'); 
-    return differenceInMinutes/UNIT;
+    const differenceInMinutes = timeEnds.diff(timeStarts, 'minutes');
+    return differenceInMinutes / UNIT;
   }
-
   return (
     <ul>
-      {activities.map((a) => 
+      {activities.map((a) =>
         <Activity
-          name = {a.name}
-          interval = {calculteInterval(a.startAt, a.endAt)}
-          intervalValue = {calculteIntervalValue(a.startAt, a.endAt)}
+          name={a.name}
+          interval={calculteInterval(a.startAt, a.endAt)}
+          intervalValue={calculteIntervalValue(a.startAt, a.endAt)}
           availableVacancies={calculateVacancies(a.capacity, a._count.User)}
+          id={a.id}
         />
       )}
     </ul>

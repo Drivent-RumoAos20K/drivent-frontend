@@ -45,17 +45,17 @@ export default function Activities() {
         <SubTitle>Primeiro, filtre pelo dia do evento.</SubTitle>
         <ContainerFilters>
           {days.map((day) => (
-            <FilterActivities 
-              day={day} 
-              setInfoDay={setInfoDay} 
-              token={token} 
+            <FilterActivities
+              day={day}
+              setInfoDay={setInfoDay}
+              token={token}
               setDaySchedule={setDaySchedule}
             />
           ))}
         </ContainerFilters>
         <div>{infoDay}</div>
         {daySchedule &&
-          <ActivitiesContainer daySchedule={daySchedule}/>
+          <ActivitiesContainer daySchedule={daySchedule} />
         }
       </>
     );

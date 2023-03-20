@@ -29,7 +29,7 @@ function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
   }
   
   return <Filter onClick={getDataOfDay}>{dayName}</Filter>;
-
+}
 export default FilterActivities;
 
 const Filter = styled.div`
