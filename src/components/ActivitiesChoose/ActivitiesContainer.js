@@ -22,8 +22,10 @@ export default function ActivitiesContainer({ daySchedule }) {
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: fit-content;
+  height: 430px;
+  overflow-y: hidden;
   margin-top: 30px;
+  border-bottom: 1px solid #D7D7D7;
 
   @media(max-width: 700px) {
     flex-direction: column;
