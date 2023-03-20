@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getActivities } from '../../services/activities';
 
-export default function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
+export default function FilterActivities({ isSelected, setSelectedDay, id, day, setInfoDay, token, setDaySchedule }) {
   const [dayName, setDayName] = useState('');
   
   async function getDataOfDay() {
+    setSelectedDay(id);
     const dayScheduleNow = await getActivities(day.id, token);
     setDaySchedule(dayScheduleNow.data);
   }
@@ -28,15 +29,15 @@ export default function FilterActivities({ day, setInfoDay, token, setDaySchedul
     }
   }
   
-  return <Filter onClick={getDataOfDay}>{dayName}</Filter>;
+  return <Filter isSelected={isSelected} onClick={getDataOfDay}>{dayName}</Filter>;
 }
 
 const Filter = styled.div`
   width: 141px;
   height: 47px;
-  background-color: #e0e0e0;
+  background-color: ${props => props.isSelected ? '#FFD37D' : '#e0e0e0'};
   display: flex;
-  align-items: center;
+  align-items: center;  
   justify-content: center;
   border-radius: 6px;
   font-family: 'Roboto', sans-serif;
