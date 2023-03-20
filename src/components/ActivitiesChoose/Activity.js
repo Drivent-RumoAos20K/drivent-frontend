@@ -41,7 +41,7 @@ export default function Activity( { name, interval, intervalValue, availableVaca
 const ActivityStyle = styled.li`
   display: flex;
   height: ${({ height }) => height};
-
+  font-family: 'Roboto', sans-serif;
   background-color: #F1F1F1;
   border-radius: 5px;
   margin: 6px 0;
@@ -55,6 +55,7 @@ const TextDiv = styled.div`
     font-size: 12px;
     font-weight: bold;
     margin-bottom: 10px;
+    padding-right: 10px;
   }
 
   p {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getActivities } from '../../services/activities';
 
-function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
+export default function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
   const [dayName, setDayName] = useState('');
   
   async function getDataOfDay() {
@@ -29,8 +29,7 @@ function FilterActivities({ day, setInfoDay, token, setDaySchedule }) {
   }
   
   return <Filter onClick={getDataOfDay}>{dayName}</Filter>;
-
-export default FilterActivities;
+}
 
 const Filter = styled.div`
   width: 141px;
@@ -40,5 +39,6 @@ const Filter = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
 `;
