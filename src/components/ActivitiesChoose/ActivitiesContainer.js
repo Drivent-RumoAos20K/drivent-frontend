@@ -22,7 +22,8 @@ export default function ActivitiesContainer({ daySchedule }) {
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: fit-content;
+  height: 410px;
+  overflow-y: auto;
   margin-top: 30px;
 
   @media(max-width: 700px) {
@@ -52,7 +53,7 @@ const PlaceContainer = styled.div`
 const PlaceWrapper = styled.div`
   border: 1px solid #D7D7D7;
   padding: 10px;
-  min-height: 70vh;
+  min-height: 90%;
 
   @media(max-width: 700px) {
     min-height: fit-content;

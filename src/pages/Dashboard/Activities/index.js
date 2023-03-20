@@ -15,7 +15,7 @@ export default function Activities() {
     { id: 3, date: new Date('2023-03-26T03:24:00') },
   ];
   const { ticket } = useTicket();
-
+  const [selectedDay, setSelectedDay] = useState(undefined);
   const [daySchedule, setDaySchedule] = useState(undefined);
 
   function showDisplay() {
@@ -46,9 +46,12 @@ export default function Activities() {
         <ContainerFilters>
           {days.map((day) => (
             <FilterActivities
-              day={day}
-              setInfoDay={setInfoDay}
-              token={token}
+              isSelected={day.id===selectedDay}
+              setSelectedDay={setSelectedDay} 
+              id={day.id}
+              day={day} 
+              setInfoDay={setInfoDay} 
+              token={token} 
               setDaySchedule={setDaySchedule}
             />
           ))}
