@@ -4,13 +4,13 @@ import Place from './Place';
 export default function ActivitiesContainer({ daySchedule }) {
   return (
     <Container>
-      {daySchedule.map((s) => 
+      {daySchedule.map((s) =>
         <PlaceContainer>
           <span>
             <h1>{s.name}</h1>
           </span>
           <PlaceWrapper>
-            <Place activities={s.Activity}/>
+            <Place activities={s.Activity} />
 
           </PlaceWrapper>
         </PlaceContainer>

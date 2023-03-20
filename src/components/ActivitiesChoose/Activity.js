@@ -1,11 +1,39 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useToken from '../../hooks/useToken';
+import { getActivitiesUser, signUpActivity } from '../../services/activities';
+import { toast } from 'react-toastify';
 
-export default function Activity( { name, interval, intervalValue, availableVacancies }) {
-  const isAvailable = availableVacancies > 0; 
+export default function Activity({ name, interval, intervalValue, availableVacancies, id }) {
+  const isAvailable = availableVacancies > 0;
   const RED = '#CC6666';
   const GREEN = '#078632';
   const DEFAULT_ACTIVITY_SIZE = 10;
-  const height = ((DEFAULT_ACTIVITY_SIZE * intervalValue))+ 'px';
+  const height = ((DEFAULT_ACTIVITY_SIZE * intervalValue)) + 'px';
+
+  const [registered, setRegistered] = useState([]);
+
+  const token = useToken();
+
+  useEffect(async() => {
+    setRegistered(await (await getActivitiesUser(token)).data);
+  }, [subscribe]);
+
+  async function subscribe() {
+    try {
+      await signUpActivity(id, token);
+    } catch (err) {
+      if (err.response.data.name === 'alreadyRegisteredError') {
+        toast.warning('Você já está inscrito !');
+      };
+      if (err.response.data.name === 'schedulesConflictError') {
+        toast.warning('Essa atividade conflita com o horario de outra atividade sua!');
+      };
+      if (err.response.data.name === 'noVacancyError') {
+        toast.warning('Vagas esgotadas :(');
+      };
+    };
+  };
 
   return (
     <ActivityStyle height={height}>
@@ -18,17 +46,19 @@ export default function Activity( { name, interval, intervalValue, availableVaca
       >
         <IconWrapper>
           {isAvailable ?
-            <ion-icon
-              name="enter-outline"
-            />  
+            (registered.includes(id) ?
+              <ion-icon onClick={subscribe} name="checkmark-circle-outline"></ion-icon> :
+              <ion-icon onClick={subscribe} name='enter-outline' />)
             :
-            <ion-icon 
+            <ion-icon
+              onClick={subscribe}
               name="close-circle-outline"
             />
           }
         </IconWrapper>
         {isAvailable ?
-          <p>{availableVacancies} vagas</p> 
+          (registered.includes(id) ? <p>Inscrito</p> :
+            <p>{availableVacancies} vagas</p>)
           :
           <p>Esgotado</p>
         }
@@ -46,7 +76,7 @@ const ActivityStyle = styled.li`
   border-radius: 5px;
   margin: 6px 0;
   padding: 10px;
-`;  
+`;
 
 const TextDiv = styled.div`
   width: 70%;

@@ -58,7 +58,7 @@ export default function Activities() {
         </ContainerFilters>
         <div>{infoDay}</div>
         {daySchedule &&
-          <ActivitiesContainer daySchedule={daySchedule}/>
+          <ActivitiesContainer daySchedule={daySchedule} />
         }
       </>
     );
